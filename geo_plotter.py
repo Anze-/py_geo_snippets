@@ -7,9 +7,9 @@ import sys
 
 def plot_static_png(geojson, filename="route.png", open_image=False):
     """Generate and optionally open a static PNG route map."""
-
+    coords = geojson['coordinates']
     m = StaticMap(600, 400, url_template='http://a.tile.openstreetmap.org/{z}/{x}/{y}.png')
-    m.add_line(Line(geojson, 'blue', 3))
+    m.add_line(Line(coords, 'blue', 3))
     image = m.render()
     image.save(filename)
 
@@ -48,8 +48,7 @@ def test(base_url = "http://router.project-osrm.org/route/v1/driving/"):
     params = {"overview": overview, "geometries": geometry}
     response = requests.get(base_url + coords, params=params)
     response.raise_for_status()
-    route = response.json()['routes'][0]['geometry']
-    geojson = route['coordinates']
+    geojson = response.json()['routes'][0]['geometry']
     # This is how it's used:
     plot_static_png(geojson, filename="route.png", open_image=True)
     plot_interactive_map(center=start, geojson=geojson, filename="route_map.html", open_browser=True)
