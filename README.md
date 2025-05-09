@@ -38,6 +38,5 @@ Uses OSRM’s /route API to test routes
 ### 📁 File Overview
 ```
 geo_plotter.py         # Core library
-main.py                # Example usage
 README.md              # This file
 ```
