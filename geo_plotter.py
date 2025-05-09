@@ -38,14 +38,18 @@ def plot_interactive_map(center, geojson, filename="route_map.html", open_browse
             subprocess.run(['xdg-open', filename])
 
 # used for testing only:
-def fetch_osrm_route(start, end, overview="full", geometry="geojson"):
+def test(base_url = "http://router.project-osrm.org/route/v1/driving/"):
     """Fetch a route from the OSRM API."""
-    base_url = "http://router.project-osrm.org/route/v1/driving/"
+    start = (52.517037, 13.388860)  # (lat, lon)
+    end = (52.529407, 13.397634)
+    overview='full'
+    geometry='geojson'
     coords = f"{start[1]},{start[0]};{end[1]},{end[0]}"
     params = {"overview": overview, "geometries": geometry}
     response = requests.get(base_url + coords, params=params)
     response.raise_for_status()
     route = response.json()['routes'][0]['geometry']
     geojson = route['coordinates']
+    # This is how it's used:
     plot_static_png(geojson, filename="route.png", open_image=True)
     plot_interactive_map(center=start, geojson=geojson, filename="route_map.html", open_browser=True)
