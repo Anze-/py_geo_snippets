@@ -19,9 +19,13 @@ pip install requests folium staticmap pillow
 ```
 
 ### 🧩 Usage
-Look at:
-
-def test(...): ...
+```python
+import geo_plotter
+geo_plotter.test() # auto execute a test
+# This is how it's actually used:
+plot_static_png(geojson, filename="route.png", open_image=True)
+plot_interactive_map(center=start, geojson=geojson, filename="route_map.html", open_browser=True)
+```
 
 ### 🧠 How it Works
 
